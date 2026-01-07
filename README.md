@@ -25,7 +25,7 @@ It supports **smoke, load, and endurance tests**, structured API modules, Promet
 
 ## Test Plan
 See the detailed test plan here:
-- [Test Plan](./docs/testplan.md)
+- [Test Plan](./docs/TestPlan.md)
 
 ---
 
