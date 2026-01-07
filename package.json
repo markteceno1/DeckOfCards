@@ -1,0 +1,23 @@
+{
+  "devDependencies": {
+    "@types/k6": "^1.5.0",
+    "cross-env": "^7.0.3",
+    "esbuild": "^0.27.2",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "build:k6": "esbuild src/tests/test.ts --bundle --format=esm --platform=neutral --outfile=dist/main.js --external:k6 --external:k6/*",
+
+    "run:k6": "npm run build:k6 && k6 run --summary-mode=legacy dist/main.js",
+
+    "run:k6:smoke": "npm run build:k6 && cross-env TEST_TYPE=smoke BASE_URL=http://127.0.0.1:8000 k6 run --summary-mode=legacy dist/main.js",
+    "run:k6:load": "npm run build:k6 && cross-env TEST_TYPE=load BASE_URL=http://127.0.0.1:8000 k6 run --summary-mode=legacy dist/main.js",
+    "run:k6:endurance": "npm run build:k6 && cross-env TEST_TYPE=endurance BASE_URL=http://127.0.0.1:8000 k6 run --summary-mode=legacy dist/main.js",
+
+    "run:k6:prom": "npm run build:k6 && cross-env BASE_URL=http://127.0.0.1:8000 TEST_TYPE=smoke K6_PROMETHEUS_RW_SERVER_URL=http://localhost:9090/api/v1/write K6_PROMETHEUS_RW_TREND_AS_NATIVE_HISTOGRAM=true k6 run -o experimental-prometheus-rw --summary-mode=legacy dist/main.js",
+    "run:k6:prom:load": "npm run build:k6 && cross-env BASE_URL=http://127.0.0.1:8000 TEST_TYPE=load K6_PROMETHEUS_RW_SERVER_URL=http://localhost:9090/api/v1/write K6_PROMETHEUS_RW_TREND_AS_NATIVE_HISTOGRAM=true k6 run -o experimental-prometheus-rw --summary-mode=legacy dist/main.js",
+    "run:k6:prom:endurance": "npm run build:k6 && cross-env BASE_URL=http://127.0.0.1:8000 TEST_TYPE=endurance K6_PROMETHEUS_RW_SERVER_URL=http://localhost:9090/api/v1/write K6_PROMETHEUS_RW_TREND_AS_NATIVE_HISTOGRAM=true k6 run -o experimental-prometheus-rw --summary-mode=legacy dist/main.js",
+
+    "watch:k6": "esbuild src/tests/test.ts --bundle --format=esm --platform=neutral --outfile=dist/main.js --external:k6 --external:k6/* --watch"
+  }
+}
