@@ -152,6 +152,17 @@ Enable:
 
 This exports Trend metrics as histograms for accurate aggregation across runs.
 
+### 5.4 Environment Monitoring
+
+- The test environment must be instrumented to provide visibility into application and infrastructure behavior.
+- Metrics collection must include:
+  - Application-level performance metrics
+  - Environmental metrics (CPU, memory, disk I/O, network utilization)
+- Observability tooling must be validated prior to test execution.
+- Metrics must be continuously captured and retained for the full test duration.
+- Any gaps in telemetry, metric loss, or ingestion failures must be documented.
+- Test results impacted by incomplete or unreliable monitoring data should be considered invalid.
+
 ---
 
 ## 6. Measuring & Evaluating Performance
@@ -196,6 +207,14 @@ histogram_quantile(0.90, sum by(le, name, method, status) (rate(k6_http_req_dura
   - error rate
   - throughput achieved
 - Fail CI on threshold breaches.
+
+### 6.5 Environmental Monitoring
+
+- Environmental metrics are monitored continuously during test execution.
+- System resources (CPU, memory, disk I/O, network) must remain within expected operating thresholds.
+- Infrastructure events (deployments, scaling activities, configuration changes) must be recorded.
+- Resource saturation or environmental instability must be documented.
+- Tests affected by environmental issues should be flagged and rerun under stable conditions.
 
 ---
 
